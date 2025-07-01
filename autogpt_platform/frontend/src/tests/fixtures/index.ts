@@ -7,6 +7,10 @@ import path from "path";
 import { TestUser } from "./test-user.fixture";
 import { LoginPage } from "../pages/login.page";
 
+// Skip all tests when required Supabase credentials are not provided
+const missingSupabaseCreds =
+  !process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY;
+
 // Extend both worker state and test-specific fixtures
 type WorkerFixtures = {
   workerAuth: TestUser;
@@ -105,5 +109,11 @@ export const test = base.extend<TestFixtures, WorkerFixtures>({
     await use(new LoginPage(page));
   },
 });
+
+// Skip all tests if required Supabase credentials are missing
+test.skip(
+  missingSupabaseCreds,
+  "SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set",
+);
 
 export { expect } from "@playwright/test";
