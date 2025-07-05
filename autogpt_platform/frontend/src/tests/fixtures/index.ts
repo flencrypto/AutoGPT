@@ -6,10 +6,8 @@ import fs from "fs";
 import path from "path";
 import { TestUser } from "./test-user.fixture";
 import { LoginPage } from "../pages/login.page";
+import { missingSupabaseCreds } from "../setup";
 
-// Skip all tests when required Supabase credentials are not provided
-const missingSupabaseCreds =
-  !process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Extend both worker state and test-specific fixtures
 type WorkerFixtures = {
